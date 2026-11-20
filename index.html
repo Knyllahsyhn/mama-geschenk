@@ -4,31 +4,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#2a2a2c">
+<meta name="theme-color" content="#2a110e">
 <title>Post für dich</title>
 <meta property="og:title" content="Post für dich">
 <meta property="og:description" content="Da ist ein Paket für Frau Müller.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='9' width='26' height='20' rx='3' fill='%23a9d9c9'/%3E%3Crect x='3' y='13' width='26' height='4' fill='%23ff6a3d'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='3,29 29,29 16,4' fill='%23c9361f' stroke='%231c0f0d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='21' r='4' fill='%231c0f0d'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@500;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@500;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="zu">
 
+<!-- Formen-Vorrat -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="s-dreieck" viewBox="0 0 100 100"><polygon points="6,94 94,94 50,8" /></symbol>
+    <symbol id="s-halb" viewBox="0 0 100 100"><path d="M5 72 A45 45 0 0 1 95 72 Z" /></symbol>
+    <symbol id="s-mond" viewBox="0 0 100 100"><path d="M6 94 L6 6 A88 88 0 0 1 94 94 Z" /></symbol>
+    <symbol id="s-kreis" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" /></symbol>
+    <symbol id="s-spirale" viewBox="0 0 100 100"><path style="fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round" d="M52.0 50.0 L52.4 50.4 L52.6 51.0 L52.7 51.7 L52.6 52.5 L52.3 53.2 L51.9 54.0 L51.2 54.6 L50.3 55.2 L49.3 55.5 L48.2 55.7 L46.9 55.6 L45.7 55.2 L44.5 54.6 L43.4 53.6 L42.4 52.5 L41.7 51.0 L41.3 49.5 L41.2 47.7 L41.4 45.9 L42.0 44.2 L42.9 42.5 L44.3 41.0 L45.9 39.7 L47.8 38.7 L50.0 38.1 L52.3 37.9 L54.7 38.2 L57.0 38.9 L59.2 40.2 L61.2 41.8 L62.9 43.9 L64.2 46.4 L65.0 49.1 L65.3 51.9 L65.1 54.9 L64.2 57.8 L62.8 60.6 L60.9 63.1 L58.4 65.3 L55.5 67.0 L52.3 68.1 L48.8 68.6 L45.3 68.4 L41.7 67.6 L38.4 66.0 L35.3 63.8 L32.6 61.0 L30.5 57.7 L29.0 54.0 L28.2 50.0 L28.2 45.8 L29.0 41.7 L30.6 37.7 L33.0 34.0 L36.0 30.8 L39.7 28.1 L43.9 26.2 L48.4 25.1 L53.2 24.8 L58.0 25.5 L62.6 27.1 L66.9 29.5 L70.8 32.8 L74.0 36.8 L76.4 41.4 L77.9 46.5 L78.5 51.8 L78.0 57.2 L76.5 62.5 L74.0 67.5 L70.6 72.0 L66.3 75.8 L61.4 78.7 L55.9 80.7 L50.0 81.7 L44.0 81.5 L38.0 80.2 L32.4 77.8 L27.2 74.3 L22.8 69.8 L19.2 64.5 L16.6 58.6 L15.2 52.2 L15.0 45.6 L16.1 39.0 L18.4 32.6 L21.9 26.8 L26.5 21.6 L32.1 17.4 L38.4 14.2 L45.2 12.3 L52.4 11.6 L59.7 12.4 L66.7 14.5 L73.3 17.9 L79.2 22.6 L84.1 28.3 L87.9 35.0 L90.5 42.3" /></symbol>
+    <symbol id="s-kamm" viewBox="0 0 100 100"><g style="fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round"><path d="M10 8 L10 92 L90 92" /><path d="M28 8 V78 M44 8 V78 M60 8 V78 M76 8 V78" /></g></symbol>
+    <symbol id="s-finger" viewBox="0 0 100 100"><rect x="6" y="30" width="16" height="64" rx="8" transform="rotate(-14 14 62)" /><rect x="29" y="18" width="16" height="74" rx="8" transform="rotate(-5 37 55)" /><rect x="52" y="16" width="16" height="74" rx="8" transform="rotate(5 60 53)" /><rect x="75" y="26" width="16" height="66" rx="8" transform="rotate(14 83 59)" /></symbol>
+  </defs>
+</svg>
+
 <canvas id="konfetti" aria-hidden="true"></canvas>
 
 <!-- 1 · Paket und Enthüllung -->
-<section id="start" class="szene">
+<section id="start" class="szene holz-dunkel">
+  <div class="formen" aria-hidden="true">
+    <svg class="form rot"   style="--x:74%;--y:9%;--g:96px;--r:14deg;--t:.12"><use href="#s-dreieck"/></svg>
+    <svg class="form rosa"  style="--x:-8%;--y:50%;--g:84px;--r:0deg;--t:-.3"><use href="#s-spirale"/></svg>
+    <svg class="form minze" style="--x:64%;--y:84%;--g:150px;--r:-10deg;--t:.06"><use href="#s-halb"/></svg>
+    <svg class="form rot"   style="--x:2%;--y:91%;--g:54px;--r:6deg;--t:.04"><use href="#s-kamm"/></svg>
+    <svg class="form rosa"  style="--x:86%;--y:46%;--g:58px;--r:-24deg;--t:.08"><use href="#s-finger"/></svg>
+    <span class="form auge" style="--x:6%;--y:75%;--g:76px;--r:-8deg"></span>
+  </div>
+
   <header class="kopf">
     <div class="kopf-zu">
       <p class="klein">Zustellung</p>
-      <h1>Post für dich.</h1>
-      <p class="unterzeile">Zieh den orangen Streifen ab.</p>
+      <h1><span class="w1">Post</span> <span class="w2">für</span> <span class="w3">dich.</span></h1>
+      <p class="unterzeile">Zieh den roten Streifen ab.</p>
     </div>
     <div class="kopf-auf" aria-live="polite">
       <p class="klein">Ausgepackt</p>
-      <h1>acasa mint</h1>
+      <h1><span class="w1">acasa</span> <span class="w3">mint</span></h1>
       <p class="unterzeile">Hausschuhe mit Barfußsohle. Für zu Hause.</p>
     </div>
   </header>
@@ -39,13 +61,11 @@
 
     <div class="paket" id="paket">
       <svg class="schleife" viewBox="0 0 140 80" aria-hidden="true">
-        <path d="M70 46 C52 12 14 6 12 30 C10 52 46 56 70 46Z" />
-        <path d="M70 46 C88 12 126 6 128 30 C130 52 94 56 70 46Z" />
-        <path class="innen" d="M70 46 C58 26 32 20 28 32 C25 44 50 50 70 46Z" />
-        <path class="innen" d="M70 46 C82 26 108 20 112 32 C115 44 90 50 70 46Z" />
-        <path d="M64 48 L48 80 L58 76 L62 80 L70 52Z" />
-        <path d="M76 48 L92 80 L82 76 L78 80 L70 52Z" />
-        <rect x="60" y="36" width="20" height="20" rx="6" />
+        <polygon points="8,6 8,70 70,40" />
+        <polygon points="132,6 132,70 70,40" />
+        <polygon class="innen" points="22,24 22,54 58,40" />
+        <polygon class="innen" points="118,24 118,54 82,40" />
+        <circle cx="70" cy="40" r="13" class="knoten" />
       </svg>
       <div class="deckel"></div>
       <div class="unterteil">
@@ -72,7 +92,13 @@
 </section>
 
 <!-- 2 · Brief -->
-<section id="brief" class="szene papier">
+<section id="brief" class="szene rosa-flaeche">
+  <div class="formen" aria-hidden="true">
+    <svg class="form ochs"    style="--x:-14%;--y:4%;--g:170px;--r:90deg;--t:.05"><use href="#s-halb"/></svg>
+    <svg class="form schwarz" style="--x:80%;--y:70%;--g:110px;--r:-16deg;--t:-.1"><use href="#s-dreieck"/></svg>
+    <svg class="form rot"     style="--x:72%;--y:6%;--g:66px;--r:0deg;--t:.35"><use href="#s-spirale"/></svg>
+    <span class="form auge"   style="--x:6%;--y:84%;--g:64px;--r:10deg"></span>
+  </div>
   <p class="klein">Ein paar Zeilen dazu</p>
   <button class="umschlag" id="umschlag" type="button" aria-label="Brief öffnen">
     <span class="umschlag-brief"></span>
@@ -85,9 +111,14 @@
 </section>
 
 <!-- 3 · Der Schuh -->
-<section id="schuh" class="szene filz">
+<section id="schuh" class="szene holz-dunkel">
+  <div class="formen" aria-hidden="true">
+    <svg class="form rot"   style="--x:78%;--y:2%;--g:120px;--r:0deg;--t:.08"><use href="#s-mond"/></svg>
+    <svg class="form rosa"  style="--x:-8%;--y:52%;--g:70px;--r:30deg;--t:.1"><use href="#s-finger"/></svg>
+    <svg class="form minze" style="--x:84%;--y:90%;--g:80px;--r:0deg;--t:-.25"><use href="#s-spirale"/></svg>
+  </div>
   <p class="klein">Was du da bekommst</p>
-  <h2>Kennst du schon.<br>Jetzt auch für drinnen.</h2>
+  <h2><span class="w1">Kennst du schon.</span><br><span class="w2">Jetzt auch für drinnen.</span></h2>
   <p class="text">Du läufst draußen schon barfuß auf leguano. Der acasa hat dieselbe dünne Sohle, nur mit Wolle obendrauf.</p>
 
   <div class="galerie" id="galerie">
@@ -100,16 +131,33 @@
 
   <p class="klein abstand">Zum Umdrehen antippen</p>
   <div class="karten">
-    <button class="karte" type="button"><span class="vorne"><b>60&nbsp;%</b>Wolle</span><span class="hinten">Das Obermaterial ist größtenteils Wolle. Die hält warm, ein dickes Futter braucht es nicht.</span></button>
-    <button class="karte" type="button"><span class="vorne"><b>2&nbsp;mm</b>Sohle</span><span class="hinten">Die gleiche Sohle wie bei deinen leguanos für draußen. Parkett und Fliesen spürst du darunter.</span></button>
-    <button class="karte" type="button"><span class="vorne"><b>0&nbsp;mm</b>Absatz</span><span class="hinten">Ferse und Ballen liegen auf einer Höhe. Vorne ist der Schuh so breit wie dein Fuß.</span></button>
-    <button class="karte" type="button"><span class="vorne"><b>30&nbsp;°C</b>waschbar</span><span class="hinten">Im Wäschenetz in den Wollwaschgang. Ohne Weichspüler und bitte nicht in den Trockner.</span></button>
+    <button class="karte" type="button"><span class="vorne"><svg class="karten-form"><use href="#s-kamm"/></svg><b>60&nbsp;%</b>Wolle</span><span class="hinten">Das Obermaterial ist größtenteils Wolle. Die hält warm, ein dickes Futter braucht es nicht.</span></button>
+    <button class="karte" type="button"><span class="vorne"><svg class="karten-form"><use href="#s-halb"/></svg><b>2&nbsp;mm</b>Sohle</span><span class="hinten">Die gleiche Sohle wie bei deinen leguanos für draußen. Parkett und Fliesen spürst du darunter.</span></button>
+    <button class="karte" type="button"><span class="vorne"><svg class="karten-form"><use href="#s-dreieck"/></svg><b>0&nbsp;mm</b>Absatz</span><span class="hinten">Ferse und Ballen liegen auf einer Höhe. Vorne ist der Schuh so breit wie dein Fuß.</span></button>
+    <button class="karte" type="button"><span class="vorne"><svg class="karten-form"><use href="#s-spirale"/></svg><b>30&nbsp;°C</b>waschbar</span><span class="hinten">Im Wäschenetz in den Wollwaschgang. Ohne Weichspüler und bitte nicht in den Trockner.</span></button>
   </div>
   <p class="herkunft">Handgemacht in Deutschland.</p>
 </section>
 
-<!-- 4 · Unterwegs -->
-<section id="unterwegs" class="szene minze">
+<!-- 4 · POV -->
+<section id="pov" class="szene holz-hell">
+  <div class="formen" aria-hidden="true">
+    <svg class="form schwarz" style="--x:78%;--y:-3%;--g:130px;--r:180deg;--t:.06"><use href="#s-halb"/></svg>
+    <svg class="form rot"     style="--x:82%;--y:84%;--g:76px;--r:0deg;--t:-.3"><use href="#s-spirale"/></svg>
+  </div>
+  <p class="klein">Kleines Problem</p>
+  <figure class="gemaelde" id="gemaelde">
+    <img src="img/pov.webp" alt="Abstrakte Figur aus Chromophobia, die erschrocken guckt" width="844" height="734" loading="lazy">
+  </figure>
+  <p class="pov"><b>POV:</b> wir, als wir merkten, dass der Schuh niemals rechtzeitig ankommt.</p>
+</section>
+
+<!-- 5 · Unterwegs -->
+<section id="unterwegs" class="szene papier-flaeche">
+  <div class="formen" aria-hidden="true">
+    <svg class="form rosa" style="--x:88%;--y:3%;--g:96px;--r:12deg;--t:.08"><use href="#s-dreieck"/></svg>
+    <svg class="form ochs" style="--x:78%;--y:86%;--g:110px;--r:-90deg;--t:.05"><use href="#s-mond"/></svg>
+  </div>
   <p class="klein">Lieferstatus</p>
   <h2>Und wo sind sie jetzt?</h2>
   <p class="text" id="status-notiz">Einen Moment, ich schaue nach …</p>
@@ -117,9 +165,15 @@
   <p class="stand" id="status-stand"></p>
 </section>
 
-<!-- 5 · Schluss -->
-<section id="ende" class="szene orange">
-  <h2>Alles Gute zum Geburtstag, Mama!</h2>
+<!-- 6 · Schluss -->
+<section id="ende" class="szene rot-flaeche">
+  <div class="formen" aria-hidden="true">
+    <svg class="form schwarz" style="--x:58%;--y:-6%;--g:220px;--r:180deg;--t:.04"><use href="#s-halb"/></svg>
+    <svg class="form rosa"    style="--x:-8%;--y:70%;--g:100px;--r:0deg;--t:-.35"><use href="#s-spirale"/></svg>
+    <svg class="form ochs"    style="--x:76%;--y:78%;--g:90px;--r:-8deg;--t:.1"><use href="#s-kamm"/></svg>
+    <span class="form auge"   style="--x:70%;--y:10%;--g:84px;--r:-6deg"></span>
+  </div>
+  <h2><span class="w1">Alles Gute</span> <span class="w2">zum Geburtstag,</span> <span class="w3">Mama!</span></h2>
   <p class="text">Bis die echten da sind, hast du jetzt wenigstens das Auspacken.</p>
   <button class="nochmal" id="nochmal" type="button">Nochmal auspacken</button>
 </section>

@@ -63,7 +63,7 @@ function oeffnen() {
   if (body.classList.contains("offen")) return;
   body.classList.add("offen");
   vibriere([25, 50, 40]);
-  themaFarbe("#a9d9c9");
+  themaFarbe("#a8cdc6");
   merken(true);
   const r = $("#paket").getBoundingClientRect();
   konfetti(r.left + r.width / 2, r.top + r.height * 0.4, 140);
@@ -75,7 +75,7 @@ function zuruecksetzen() {
   window.scrollTo({ top: 0, behavior: "instant" });
   body.classList.add("zu");
   body.classList.remove("offen");
-  themaFarbe("#2a2a2c");
+  themaFarbe("#2a110e");
   anteil = 0; letzterRuck = 0;
   streifen.classList.remove("angefangen", "zieht");
   zeichneStreifen(0);
@@ -86,7 +86,7 @@ $("#nochmal").addEventListener("click", zuruecksetzen);
 if (gemerkt() && !new URLSearchParams(location.search).has("neu")) {
   body.classList.add("offen", "sofort");
   body.classList.remove("zu");
-  themaFarbe("#a9d9c9");
+  themaFarbe("#a8cdc6");
   requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove("sofort")));
 }
 
@@ -94,7 +94,8 @@ if (gemerkt() && !new URLSearchParams(location.search).has("neu")) {
 
 const leinwand = $("#konfetti");
 const stift = leinwand.getContext("2d");
-const FARBEN = ["#a9d9c9", "#ff6a3d", "#2a2a2c", "#ebe5d9", "#3f8f78", "#d9f0e7"];
+const FARBEN = ["#c9361f", "#e9a7b4", "#4a1712", "#a8cdc6", "#f3ead9", "#c9361f"];
+const FORMEN = ["dreieck", "halb", "kreis", "bogen", "streifen"];
 let teile = [], laeuft = false;
 
 function konfetti(x, y, anzahl) {
@@ -109,9 +110,9 @@ function konfetti(x, y, anzahl) {
       x, y,
       vx: Math.cos(winkel) * tempo, vy: Math.sin(winkel) * tempo,
       dreh: Math.random() * 6, vdreh: (Math.random() - 0.5) * 0.3,
-      gr: 6 + Math.random() * 9,
+      gr: 9 + Math.random() * 12,
       farbe: FARBEN[(Math.random() * FARBEN.length) | 0],
-      form: Math.random() < 0.3 ? "faser" : Math.random() < 0.5 ? "kreis" : "filz",
+      form: FORMEN[(Math.random() * FORMEN.length) | 0],
       kipp: Math.random() * Math.PI,
     });
   }
@@ -127,17 +128,24 @@ function schritt() {
     stift.save();
     stift.translate(t.x, t.y); stift.rotate(t.dreh);
     stift.scale(1, Math.abs(Math.cos(t.kipp)) * 0.7 + 0.3);
-    stift.fillStyle = stift.strokeStyle = t.farbe;
-    if (t.form === "kreis") {
-      stift.beginPath(); stift.arc(0, 0, t.gr / 2.2, 0, Math.PI * 2); stift.fill();
-    } else if (t.form === "faser") {
-      stift.lineWidth = 2.2; stift.lineCap = "round";
-      stift.beginPath(); stift.moveTo(-t.gr, 0);
-      stift.quadraticCurveTo(-t.gr / 2, -t.gr / 1.6, 0, 0);
-      stift.quadraticCurveTo(t.gr / 2, t.gr / 1.6, t.gr, 0); stift.stroke();
-    } else {
-      stift.beginPath(); stift.roundRect ? stift.roundRect(-t.gr / 2, -t.gr / 3, t.gr, t.gr / 1.5, 2) : stift.rect(-t.gr / 2, -t.gr / 3, t.gr, t.gr / 1.5); stift.fill();
+    const g = t.gr / 2;
+    stift.fillStyle = t.farbe;
+    stift.strokeStyle = "#1c0f0d";
+    stift.lineWidth = 2; stift.lineJoin = "round"; stift.lineCap = "round";
+    stift.beginPath();
+    if (t.form === "dreieck") {
+      stift.moveTo(0, -g); stift.lineTo(g, g * 0.8); stift.lineTo(-g, g * 0.8); stift.closePath();
+    } else if (t.form === "halb") {
+      stift.arc(0, g * 0.3, g, Math.PI, 0); stift.closePath();
+    } else if (t.form === "kreis") {
+      stift.arc(0, 0, g * 0.7, 0, Math.PI * 2);
+    } else if (t.form === "streifen") {
+      stift.rect(-g * 0.3, -g, g * 0.6, g * 2);
     }
+    if (t.form === "bogen") {
+      stift.strokeStyle = t.farbe; stift.lineWidth = 3.5;
+      stift.arc(0, 0, g * 0.8, 0, Math.PI * 1.3); stift.stroke();
+    } else { stift.fill(); stift.stroke(); }
     stift.restore();
   }
   if (teile.length) requestAnimationFrame(schritt);
@@ -231,7 +239,7 @@ fetch("status.json?t=" + Date.now(), { cache: "no-store" })
 
 /* ───────── Einblenden beim Scrollen ───────── */
 
-$$(".szene:not(#start) > :not(.umschlag):not(.brief-karte)").forEach((el) => el.classList.add("einblenden"));
+$$(".szene:not(#start) > :not(.umschlag):not(.brief-karte):not(.formen):not(.gemaelde)").forEach((el) => el.classList.add("einblenden"));
 const beobachter = new IntersectionObserver((eintraege) => {
   for (const e of eintraege) {
     if (!e.isIntersecting) continue;
@@ -247,3 +255,69 @@ const beobachter = new IntersectionObserver((eintraege) => {
   }
 }, { threshold: 0.15 });
 $$(".einblenden").forEach((el) => beobachter.observe(el));
+
+/* ───────── Formen drehen sich beim Scrollen ───────── */
+
+let scrollGeplant = false;
+addEventListener("scroll", () => {
+  if (scrollGeplant || leise) return;
+  scrollGeplant = true;
+  requestAnimationFrame(() => {
+    document.documentElement.style.setProperty("--s", Math.round(scrollY));
+    scrollGeplant = false;
+  });
+}, { passive: true });
+
+/* ───────── Augen, die dem Finger folgen ───────── */
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+const AUGE = '<path class="weiss" d="M4 52 Q50 8 96 52 Q50 92 4 52Z"/>' +
+  '<circle class="pupille" cx="50" cy="56" r="13"/>' +
+  '<path class="lid" d="M4 52 Q50 8 96 52 Q50 34 4 52Z"/>' +
+  '<path class="zu" d="M4 52 Q50 8 96 52 Q50 92 4 52Z"/>';
+const augen = $$(".auge").map((el, i) => {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("viewBox", "0 0 100 100");
+  svg.innerHTML = AUGE;
+  svg.style.setProperty("--blink", (i * 1.7) % 5 + "s");
+  el.append(svg);
+  return { el, pupille: svg.querySelector(".pupille") };
+});
+
+function schauen(x, y) {
+  for (const a of augen) {
+    const r = a.el.getBoundingClientRect();
+    if (r.bottom < -50 || r.top > innerHeight + 50) continue;
+    const dx = x - (r.left + r.width / 2), dy = y - (r.top + r.height / 2);
+    const d = Math.hypot(dx, dy) || 1;
+    const k = Math.min(1, d / 120);
+    a.pupille.style.transform = `translate(${(dx / d) * 20 * k}px, ${(dy / d) * 9 * k}px)`;
+  }
+}
+let zuletztBeruehrt = 0;
+const folgen = (x, y) => { zuletztBeruehrt = Date.now(); schauen(x, y); };
+addEventListener("pointermove", (e) => folgen(e.clientX, e.clientY), { passive: true });
+addEventListener("pointerdown", (e) => folgen(e.clientX, e.clientY), { passive: true });
+addEventListener("touchmove", (e) => { const t = e.touches[0]; if (t) folgen(t.clientX, t.clientY); }, { passive: true });
+// ohne Berührung schauen die Augen ab und zu woanders hin
+setInterval(() => {
+  if (Date.now() - zuletztBeruehrt < 2500) return;
+  schauen(Math.random() * innerWidth, Math.random() * innerHeight);
+}, 1800);
+
+/* ───────── POV ───────── */
+
+const gemaelde = $("#gemaelde");
+new IntersectionObserver((e, b) => {
+  if (!e[0].isIntersecting) return;
+  gemaelde.classList.add("knall");
+  setTimeout(() => vibriere([30, 30, 60]), 250);
+  b.disconnect();
+}, { threshold: 0.4 }).observe(gemaelde);
+gemaelde.addEventListener("click", () => {
+  gemaelde.classList.remove("knall", "zittert");
+  void gemaelde.offsetWidth;
+  gemaelde.classList.add("zittert");
+  vibriere([40, 30, 40, 30, 80]);
+});
+gemaelde.addEventListener("animationend", (e) => { if (e.animationName === "zittern") gemaelde.classList.remove("zittert"); });
