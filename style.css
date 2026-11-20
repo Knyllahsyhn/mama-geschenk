@@ -353,6 +353,9 @@ body.offen .weiter { display: flex; animation: rein .6s 1.6s both; }
   transform-origin: 50% 0;
 }
 .brief-karte p { margin: 0 0 1em; }
+.brief-karte strong { font-weight: 700; }
+.brief-karte .hand { font-family: var(--hand); font-size: 1.35em; line-height: 1; color: var(--rot-tief); }
+.brief-karte s { text-decoration-thickness: 2px; text-decoration-color: var(--rot); }
 .brief-karte p:first-child { font-family: var(--hand); font-size: 2.1rem; line-height: 1.1; }
 .brief-karte .unterschrift { font-family: var(--hand); font-size: 2rem; line-height: 1.15; margin: 1.4rem 0 0; color: var(--rot); }
 @keyframes brief-rein { from { opacity: 0; transform: translateY(60px) rotate(4deg); } to { opacity: 1; transform: rotate(-1deg); } }

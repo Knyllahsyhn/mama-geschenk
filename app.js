@@ -163,13 +163,36 @@ fetch("brief.txt", { cache: "no-store" })
   .then((t) => { briefText = t; })
   .catch(() => { briefText = "Liebe Mama,\n\nder Brief ist gerade nicht zu erreichen. Lade die Seite bitte gleich noch einmal."; });
 
+// Kleine Auszeichnung im Brief: **fett**, *kursiv*, _Handschrift_, ~durchgestrichen~
+const AUSZEICHNUNG = [
+  [/\*\*(.+?)\*\*/, "strong", null],
+  [/\*(.+?)\*/, "em", null],
+  [/_(.+?)_/, "span", "hand"],
+  [/~(.+?)~/, "s", null],
+];
+function zeileSetzen(ziel, text) {
+  let fruehester = null;
+  for (const [muster, tag, klasse] of AUSZEICHNUNG) {
+    const m = muster.exec(text);
+    if (m && (!fruehester || m.index < fruehester.m.index)) fruehester = { m, tag, klasse };
+  }
+  if (!fruehester) { ziel.append(text); return; }
+  const { m, tag, klasse } = fruehester;
+  ziel.append(text.slice(0, m.index));
+  const el = document.createElement(tag);
+  if (klasse) el.className = klasse;
+  zeileSetzen(el, m[1]);
+  ziel.append(el);
+  zeileSetzen(ziel, text.slice(m.index + m[0].length));
+}
+
 function briefSetzen() {
   const absaetze = (briefText || "").trim().split(/\n\s*\n/).map((a) => a.trim()).filter(Boolean);
   briefKarte.replaceChildren();
   absaetze.forEach((a, i) => {
     const p = document.createElement("p");
     if (i === absaetze.length - 1 && absaetze.length > 1) p.className = "unterschrift";
-    a.split("\n").forEach((zeile, j) => { if (j) p.append(document.createElement("br")); p.append(zeile); });
+    a.split("\n").forEach((zeile, j) => { if (j) p.append(document.createElement("br")); zeileSetzen(p, zeile); });
     briefKarte.append(p);
   });
 }
