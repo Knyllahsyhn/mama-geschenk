@@ -393,16 +393,17 @@ body.offen .weiter { display: flex; animation: rein .6s 1.6s both; }
 
 .abstand { margin-top: 2.4rem; }
 
-.karten { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
-.karte { position: relative; aspect-ratio: 1; border: 0; padding: 0; background: none; cursor: pointer; perspective: 700px; text-align: left; }
+.karten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; container-type: inline-size; }
+/* Beide Seiten liegen in derselben Rasterzelle: die Karte ist mindestens quadratisch und wächst mit dem längeren Text */
+.karte { position: relative; display: grid; min-width: 0; min-height: calc((100cqw - .9rem) / 2); border: 0; padding: 0; background: none; cursor: pointer; perspective: 700px; text-align: left; }
 .karte .vorne, .karte .hinten {
-  position: absolute; inset: 0; border-radius: 6px; border: var(--linie);
+  position: relative; grid-area: 1 / 1; border-radius: 6px; border: var(--linie);
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
   transition: transform .6s var(--weich);
   padding: .9rem;
   display: flex; flex-direction: column; justify-content: flex-end;
   box-shadow: 6px 6px 0 rgba(0,0,0,.5);
-  overflow: hidden;
+  overflow: clip;
 }
 .karte .vorne { background: var(--minze); color: var(--kontur); font-weight: 600; font-size: 1.05rem; }
 .karte .vorne b { font-family: var(--display); font-size: clamp(2.2rem, 11vw, 2.9rem); font-weight: 800; line-height: 1; letter-spacing: -.04em; }
@@ -417,7 +418,8 @@ body.offen .weiter { display: flex; animation: rein .6s 1.6s both; }
 .karte .hinten {
   background: var(--ochs); color: var(--papier);
   transform: rotateY(180deg);
-  font-size: .95rem; line-height: 1.38; font-weight: 400; justify-content: center;
+  font-size: .9rem; line-height: 1.36; font-weight: 400; justify-content: center;
+  hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere;
 }
 .karte.gedreht .vorne { transform: rotateY(-180deg); }
 .karte.gedreht .hinten { transform: rotateY(0); }
