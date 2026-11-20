@@ -20,9 +20,9 @@
   --weich: cubic-bezier(.22, 1, .36, 1);
   --linie: 3px solid var(--kontur);
 
-  --holz: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='h'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035 .07' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.1 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23h)'/%3E%3C/svg%3E");
-  --holz-d: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='h'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035 .07' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .55 0 0 0 -.26'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23h)'/%3E%3C/svg%3E");
-  --korn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23k)'/%3E%3C/svg%3E");
+  --holz: url("img/holz.webp");
+  --holz-d: url("img/holz-d.webp");
+  --korn: url("img/korn.webp");
 }
 
 * { box-sizing: border-box; }
@@ -42,15 +42,15 @@ body.zu { overflow: hidden; height: 100svh; overscroll-behavior: none; }
 
 /* Filmkorn über allem */
 body::after {
-  content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none;
-  background: var(--korn); opacity: .09;
-  animation: korn .45s steps(3) infinite;
+  content: ""; position: fixed; inset: -60px; z-index: 60; pointer-events: none;
+  background: var(--korn) 0 0 / 200px 200px; opacity: .09;
+  will-change: transform;
+  animation: korn .45s steps(1) infinite;
 }
 @keyframes korn {
-  0% { transform: translate(0, 0); }
-  33% { transform: translate(-7%, 4%); }
-  66% { transform: translate(5%, -6%); }
-  100% { transform: translate(-3%, 7%); }
+  0% { transform: translate3d(0, 0, 0); }
+  33% { transform: translate3d(-27px, 14px, 0); }
+  66% { transform: translate3d(19px, -23px, 0); }
 }
 
 button { font: inherit; color: inherit; }
@@ -91,7 +91,8 @@ h1 span, h2 span { display: inline-block; }
 .form {
   position: absolute; left: var(--x); top: var(--y);
   width: var(--g); height: var(--g);
-  transform: rotate(calc(var(--r, 0deg) + var(--s, 0) * var(--t, 0) * 1deg));
+  transform: rotate(var(--r, 0deg));
+  will-change: transform;
   fill: currentColor; stroke: var(--kontur); stroke-width: 4.5; stroke-linejoin: round;
   overflow: visible;
 }
@@ -497,8 +498,9 @@ body.offen .weiter { display: flex; animation: rein .6s 1.6s both; }
   animation: rein .4s .9s both;
 }
 .gemaelde.gefallen::before { display: none; }
-.gemaelde img { display: block; width: 100%; height: auto; animation: flackern 3.5s steps(1) infinite; }
-@keyframes flackern { 0%, 100% { filter: none; } 47% { filter: brightness(1.08) contrast(1.05); } 49% { filter: none; } 81% { filter: brightness(.94); } 83% { filter: none; } }
+.gemaelde img { display: block; width: 100%; height: auto; }
+.flimmern { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; will-change: opacity; animation: flimmern 3.5s steps(1) infinite; }
+@keyframes flimmern { 0%, 100% { opacity: 0; } 47% { opacity: .08; } 49% { opacity: 0; } 81% { opacity: .05; } 83% { opacity: 0; } }
 .gemaelde.knall { animation: knall .9s var(--federn) both; }
 @keyframes knall { from { transform: scale(1.7) rotate(14deg); opacity: 0; } 40% { opacity: 1; } to { transform: rotate(-3deg); opacity: 1; } }
 .gemaelde.zittert img { animation: zittern .55s linear; }

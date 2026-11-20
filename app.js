@@ -258,13 +258,26 @@ $$(".einblenden").forEach((el) => beobachter.observe(el));
 
 /* ───────── Formen drehen sich beim Scrollen ───────── */
 
+// Nur sichtbare Formen bekommen pro Bild eine neue Drehung, direkt am Element.
+const formen = $$("svg.form").map((el) => ({
+  el, r: parseFloat(el.style.getPropertyValue("--r")) || 0, t: parseFloat(el.style.getPropertyValue("--t")) || 0,
+}));
+const sichtbareFormen = new Set();
+const formBeobachter = new IntersectionObserver((e) => {
+  for (const x of e) { const f = formen.find((f) => f.el === x.target); x.isIntersecting ? sichtbareFormen.add(f) : sichtbareFormen.delete(f); }
+}, { rootMargin: "100px 0px" });
+formen.forEach((f) => formBeobachter.observe(f.el));
+
+const beimScrollen = [];
 let scrollGeplant = false;
 addEventListener("scroll", () => {
-  if (scrollGeplant || leise) return;
+  if (scrollGeplant) return;
   scrollGeplant = true;
   requestAnimationFrame(() => {
-    document.documentElement.style.setProperty("--s", Math.round(scrollY));
     scrollGeplant = false;
+    const y = scrollY;
+    if (!leise) for (const f of sichtbareFormen) if (f.t) f.el.style.transform = `rotate(${(f.r + y * f.t).toFixed(1)}deg)`;
+    for (const fn of beimScrollen) fn();
   });
 }, { passive: true });
 
@@ -295,7 +308,12 @@ function schauen(x, y) {
   }
 }
 let zuletztBeruehrt = 0;
-const folgen = (x, y) => { zuletztBeruehrt = Date.now(); schauen(x, y); };
+let blick = null;
+const folgen = (x, y) => {
+  zuletztBeruehrt = Date.now();
+  if (!blick) requestAnimationFrame(() => { schauen(blick.x, blick.y); blick = null; });
+  blick = { x, y };
+};
 addEventListener("pointermove", (e) => folgen(e.clientX, e.clientY), { passive: true });
 addEventListener("pointerdown", (e) => folgen(e.clientX, e.clientY), { passive: true });
 addEventListener("touchmove", (e) => { const t = e.touches[0]; if (t) folgen(t.clientX, t.clientY); }, { passive: true });
@@ -388,10 +406,10 @@ function fallen() {
 }
 
 // fällt, sobald das Bild beim Weiterscrollen in das obere Drittel wandert
-addEventListener("scroll", () => {
+beimScrollen.push(() => {
   if (!gesehen || gefallen) return;
   if (gemaelde.getBoundingClientRect().top < innerHeight * 0.22) fallen();
-}, { passive: true });
+});
 
 function antippen() {
   gemaelde.classList.remove("zittert"); void gemaelde.offsetWidth;
