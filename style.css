@@ -475,6 +475,7 @@ body.offen .weiter { display: flex; animation: rein .6s 1.6s both; }
 .chart .lg.verfuegbar { background: var(--rosa); margin-left: .7rem; }
 
 /* Gemälde an der Wand */
+#pov .wand { z-index: 3; } /* über dem Boden, sonst fängt der das Antippen ab */
 .wand { position: relative; align-self: center; width: min(86%, 400px); padding-top: 3.4rem; margin-bottom: 2rem; }
 .nagel {
   position: absolute; left: 50%; top: .2rem; width: 14px; height: 14px; margin-left: -7px; z-index: 3;
