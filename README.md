@@ -5,7 +5,7 @@ Paket aus und sieht die leguano acasa mint in Größe 41, einen Brief und den
 Lieferstatus. Die echten Hausschuhe kommen nach, sobald Größe 41 wieder lieferbar
 ist.
 
-Adresse: https://knyllahsyhn.github.io/frau-mueller/
+Adresse: https://knyllahsyhn.github.io/mama-geschenk/
 
 ## Pflegen
 
@@ -31,7 +31,7 @@ und Status ohne Cache nach.
 
 `qr/qr.svg` und `qr/qr.png` (Fehlerkorrektur Stufe Q). Neu erzeugen:
 
-    qrencode -l Q -m 2 -t SVG -o qr/qr.svg https://knyllahsyhn.github.io/frau-mueller/
-    qrencode -l Q -m 2 -s 24 -o qr/qr.png https://knyllahsyhn.github.io/frau-mueller/
+    qrencode -l Q -m 2 -t SVG -o qr/qr.svg https://knyllahsyhn.github.io/mama-geschenk/
+    qrencode -l Q -m 2 -s 24 -o qr/qr.png https://knyllahsyhn.github.io/mama-geschenk/
 
 Produktfotos: leguano GmbH, nur für diesen privaten Zweck.
