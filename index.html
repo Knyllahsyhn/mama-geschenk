@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2a2a2c">
+<title>Post für dich</title>
+<meta property="og:title" content="Post für dich">
+<meta property="og:description" content="Da ist ein Paket für Frau Müller.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='9' width='26' height='20' rx='3' fill='%23a9d9c9'/%3E%3Crect x='3' y='13' width='26' height='4' fill='%23ff6a3d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@500;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="zu">
+
+<canvas id="konfetti" aria-hidden="true"></canvas>
+
+<!-- 1 · Paket und Enthüllung -->
+<section id="start" class="szene">
+  <header class="kopf">
+    <div class="kopf-zu">
+      <p class="klein">Zustellung</p>
+      <h1>Post für dich.</h1>
+      <p class="unterzeile">Zieh den orangen Streifen ab.</p>
+    </div>
+    <div class="kopf-auf" aria-live="polite">
+      <p class="klein">Ausgepackt</p>
+      <h1>acasa mint</h1>
+      <p class="unterzeile">Hausschuhe mit Barfußsohle. Für zu Hause.</p>
+    </div>
+  </header>
+
+  <div class="buehne">
+    <img class="schuh" src="img/acasa-2.webp" alt="Ein Paar Hausschuhe in Anthrazit mit mintfarbener Kante" width="716" height="467">
+    <div class="sticker-41" aria-hidden="true"><span>Größe</span><b>41</b></div>
+
+    <div class="paket" id="paket">
+      <svg class="schleife" viewBox="0 0 140 80" aria-hidden="true">
+        <path d="M70 46 C52 12 14 6 12 30 C10 52 46 56 70 46Z" />
+        <path d="M70 46 C88 12 126 6 128 30 C130 52 94 56 70 46Z" />
+        <path class="innen" d="M70 46 C58 26 32 20 28 32 C25 44 50 50 70 46Z" />
+        <path class="innen" d="M70 46 C82 26 108 20 112 32 C115 44 90 50 70 46Z" />
+        <path d="M64 48 L48 80 L58 76 L62 80 L70 52Z" />
+        <path d="M76 48 L92 80 L82 76 L78 80 L70 52Z" />
+        <rect x="60" y="36" width="20" height="20" rx="6" />
+      </svg>
+      <div class="deckel"></div>
+      <div class="unterteil">
+        <div class="etikett">
+          <div class="zeile"><span>An</span><em>Frau Müller</em></div>
+          <div class="zeile"><span>Inhalt</span><em>weich, warm, Gr. 41</em></div>
+          <div class="zeile"><span>Von</span><em>deinen Kindern</em></div>
+          <div class="strichcode"></div>
+        </div>
+      </div>
+      <div class="schlitz"></div>
+      <div class="streifen" id="streifen" role="slider" tabindex="0" aria-label="Aufreißstreifen, nach rechts ziehen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="streifen-band"><span>Hier ziehen</span><i>›</i><i>›</i><i>›</i></div>
+        <div class="lasche"></div>
+        <div class="lappen"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="fuss">
+    <button class="notausgang" id="notausgang" type="button">Klappt nicht? Dann hier tippen.</button>
+    <a class="weiter" href="#brief">Da ist noch mehr<span aria-hidden="true">↓</span></a>
+  </footer>
+</section>
+
+<!-- 2 · Brief -->
+<section id="brief" class="szene papier">
+  <p class="klein">Ein paar Zeilen dazu</p>
+  <button class="umschlag" id="umschlag" type="button" aria-label="Brief öffnen">
+    <span class="umschlag-brief"></span>
+    <span class="umschlag-rueckseite"></span>
+    <span class="umschlag-klappe"></span>
+    <span class="umschlag-siegel">M</span>
+    <span class="umschlag-hinweis">Antippen</span>
+  </button>
+  <article class="brief-karte" id="brief-karte" hidden></article>
+</section>
+
+<!-- 3 · Der Schuh -->
+<section id="schuh" class="szene filz">
+  <p class="klein">Was du da bekommst</p>
+  <h2>Kennst du schon.<br>Jetzt auch für drinnen.</h2>
+  <p class="text">Du läufst draußen schon barfuß auf leguano. Der acasa hat dieselbe dünne Sohle, nur mit Wolle obendrauf.</p>
+
+  <div class="galerie" id="galerie">
+    <figure><img src="img/acasa-1.webp" alt="Hausschuh von der Seite" loading="lazy" width="950" height="331"><figcaption>Von der Seite</figcaption></figure>
+    <figure><img src="img/acasa-4.webp" alt="Sohle mit Noppen von unten" loading="lazy" width="955" height="417"><figcaption>Die Sohle mit den kleinen Noppen</figcaption></figure>
+    <figure><img src="img/acasa-5.webp" alt="Zusammengerollter Hausschuh" loading="lazy" width="534" height="452"><figcaption>Lässt sich zusammenrollen</figcaption></figure>
+    <figure><img src="img/acasa-3.webp" alt="Hausschuh von vorne" loading="lazy" width="402" height="303"><figcaption>Vorne Platz für alle Zehen</figcaption></figure>
+  </div>
+  <div class="punkte" id="punkte" aria-hidden="true"></div>
+
+  <p class="klein abstand">Zum Umdrehen antippen</p>
+  <div class="karten">
+    <button class="karte" type="button"><span class="vorne"><b>60&nbsp;%</b>Wolle</span><span class="hinten">Das Obermaterial ist größtenteils Wolle. Die hält warm, ein dickes Futter braucht es nicht.</span></button>
+    <button class="karte" type="button"><span class="vorne"><b>2&nbsp;mm</b>Sohle</span><span class="hinten">Die gleiche Sohle wie bei deinen leguanos für draußen. Parkett und Fliesen spürst du darunter.</span></button>
+    <button class="karte" type="button"><span class="vorne"><b>0&nbsp;mm</b>Absatz</span><span class="hinten">Ferse und Ballen liegen auf einer Höhe. Vorne ist der Schuh so breit wie dein Fuß.</span></button>
+    <button class="karte" type="button"><span class="vorne"><b>30&nbsp;°C</b>waschbar</span><span class="hinten">Im Wäschenetz in den Wollwaschgang. Ohne Weichspüler und bitte nicht in den Trockner.</span></button>
+  </div>
+  <p class="herkunft">Handgemacht in Deutschland.</p>
+</section>
+
+<!-- 4 · Unterwegs -->
+<section id="unterwegs" class="szene minze">
+  <p class="klein">Lieferstatus</p>
+  <h2>Und wo sind sie jetzt?</h2>
+  <p class="text" id="status-notiz">Einen Moment, ich schaue nach …</p>
+  <ol class="strecke" id="strecke"></ol>
+  <p class="stand" id="status-stand"></p>
+</section>
+
+<!-- 5 · Schluss -->
+<section id="ende" class="szene orange">
+  <h2>Alles Gute zum Geburtstag, Mama!</h2>
+  <p class="text">Bis die echten da sind, hast du jetzt wenigstens das Auspacken.</p>
+  <button class="nochmal" id="nochmal" type="button">Nochmal auspacken</button>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
