@@ -191,16 +191,16 @@ body.offen .sticker-41 { transform: rotate(12deg); transition: transform .6s 1.1
 }
 
 .etikett {
-  position: absolute; left: 9%; right: 16%; top: 22%;
+  position: absolute; left: 7%; right: 7%; top: 22%;
   background: var(--papier); color: var(--kontur);
   border: var(--linie); border-radius: 4px; padding: .55rem .8rem .5rem;
   transform: rotate(-3.5deg);
   box-shadow: 4px 4px 0 var(--kontur);
 }
 .etikett .zeile { display: flex; align-items: baseline; gap: .6rem; border-bottom: 1px solid rgba(28,15,13,.18); padding: .05rem 0; }
-.etikett span { width: 3.3rem; flex: none; font-size: .62rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
-.etikett em { font-family: var(--hand); font-style: normal; font-size: clamp(1.1rem, 5.4vw, 1.45rem); line-height: 1.15; white-space: nowrap; }
-.etikett .zeile:first-child em { font-size: clamp(1.4rem, 7vw, 1.9rem); font-weight: 700; color: var(--rot-tief); }
+.etikett span { width: 2.9rem; flex: none; font-size: .62rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+.etikett em { font-family: var(--hand); font-style: normal; font-size: calc(var(--b) * .066); line-height: 1.15; white-space: nowrap; }
+.etikett .zeile:first-child em { font-size: calc(var(--b) * .085); font-weight: 700; color: var(--rot-tief); }
 .strichcode {
   height: 16px; margin-top: .45rem; width: 62%;
   background: repeating-linear-gradient(90deg, var(--kontur) 0 2px, transparent 2px 4px, var(--kontur) 4px 5px, transparent 5px 8px, var(--kontur) 8px 11px, transparent 11px 12px);
