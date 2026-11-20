@@ -422,31 +422,119 @@ body.offen .weiter { display: flex; animation: rein .6s 1.6s both; }
 
 /* ───────── 4 · POV ───────── */
 
-#pov { justify-content: center; }
+/* Chart */
+.chart {
+  margin: .2rem 0 3rem; padding: 0;
+  transform: rotate(1.5deg);
+}
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--titel); }
+.chart .flaeche { fill: var(--papier); filter: drop-shadow(8px 8px 0 rgba(28,15,13,.4)); }
+.chart .rand, .chart .stueck { fill: none; stroke: var(--kontur); stroke-width: 4; stroke-linecap: square; }
+.chart .raster { fill: none; stroke: rgba(28,15,13,.14); stroke-width: 1.5; stroke-dasharray: 4 5; }
+.chart .linie { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.chart .preis { stroke: var(--rot); stroke-width: 7; }
+.chart .verfuegbar { stroke: var(--rosa); stroke-width: 5; }
+.chart .verfuegbar-rand { stroke: var(--kontur); stroke-width: 9; }
+.chart.laeuft .linie { animation: zeichnen 2.6s both; }
+@keyframes zeichnen {
+  0% { stroke-dashoffset: 1; animation-timing-function: cubic-bezier(.3,.1,.6,1); }
+  72% { stroke-dashoffset: .26; animation-timing-function: cubic-bezier(.7,0,1,.6); }
+  100% { stroke-dashoffset: 0; }
+}
+.chart .stueck, .chart .splitter polygon { transform-box: fill-box; transform-origin: center; }
+.chart .splitter polygon { fill: var(--papier); stroke: var(--kontur); stroke-width: 2; opacity: 0; }
+.chart.kracht .stueck.oben { animation: wegfliegen-oben .9s var(--weich) forwards; }
+.chart.kracht .stueck.unten { animation: wegfliegen-unten .9s var(--weich) forwards; }
+.chart.kracht .splitter polygon { animation: splittern .9s var(--weich) forwards; }
+@keyframes wegfliegen-oben { to { transform: translate(14px, -70px) rotate(-38deg); opacity: 0; } }
+@keyframes wegfliegen-unten { to { transform: translate(18px, 74px) rotate(32deg); opacity: 0; } }
+@keyframes splittern {
+  0% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); }
+}
+.chart.kracht { animation: ruck .45s linear; }
+@keyframes ruck {
+  0%, 100% { transform: rotate(1.5deg); }
+  20% { transform: rotate(-.5deg) translate(-5px, 3px); }
+  45% { transform: rotate(3deg) translate(4px, -3px); }
+  70% { transform: rotate(.8deg) translate(-2px, 1px); }
+}
+.chart .schild { font-weight: 800; font-size: 19px; opacity: 0; letter-spacing: -.02em; }
+.chart .preis-schild { fill: var(--rot); }
+.chart .verfuegbar-schild { fill: var(--kontur); }
+.chart.kracht .schild { animation: schild-rein .5s .15s var(--federn) both; transform-box: fill-box; transform-origin: right center; }
+@keyframes schild-rein { from { opacity: 0; transform: scale(.3) rotate(-12deg); } to { opacity: 1; transform: rotate(-4deg); } }
+.chart .achse { font-family: var(--display); font-weight: 600; font-size: 12px; fill: var(--kontur); opacity: .7; }
+.chart figcaption { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; font-weight: 600; font-size: .95rem; margin-top: .6rem; }
+.chart .lg { width: 22px; height: 7px; border-radius: 4px; border: 2px solid var(--kontur); display: inline-block; }
+.chart .lg.preis { background: var(--rot); }
+.chart .lg.verfuegbar { background: var(--rosa); margin-left: .7rem; }
+
+/* Gemälde an der Wand */
+.wand { position: relative; align-self: center; width: min(86%, 400px); padding-top: 3.4rem; margin-bottom: 2rem; }
+.nagel {
+  position: absolute; left: 50%; top: .2rem; width: 14px; height: 14px; margin-left: -7px; z-index: 3;
+  border-radius: 50%; background: var(--kontur); box-shadow: inset -3px -3px 0 rgba(255,255,255,.15);
+}
 .gemaelde {
-  margin: .4rem 0 2rem; align-self: center; width: min(100%, 440px);
+  position: relative; margin: 0; z-index: 2;
   border: 4px solid var(--kontur);
   box-shadow: 0 0 0 10px var(--ochs), 0 0 0 13px var(--kontur), 18px 20px 0 13px rgba(28,15,13,.35);
-  transform: rotate(-3deg);
+  transform: rotate(-3deg); transform-origin: 50% -3.2rem;
   background: var(--kontur);
-  cursor: pointer;
+  cursor: pointer; outline: none;
 }
+.gemaelde::before { /* Aufhängeschnur bis zum Nagel */
+  content: ""; position: absolute; left: 18%; right: 18%; bottom: calc(100% + 13px); height: 3.1rem;
+  background:
+    linear-gradient(to top left, transparent calc(50% - 1.5px), var(--kontur) 50%, transparent calc(50% + 1.5px)) left / 50% 100% no-repeat,
+    linear-gradient(to top right, transparent calc(50% - 1.5px), var(--kontur) 50%, transparent calc(50% + 1.5px)) right / 50% 100% no-repeat;
+}
+.gemaelde.gefallen::after {
+  content: "Antippen = nochmal"; position: absolute; right: 10px; bottom: -24px; z-index: 2;
+  background: var(--papier); border: var(--linie); padding: .2rem .55rem;
+  font-weight: 800; font-size: .85rem; transform: rotate(6deg);
+  animation: rein .4s .9s both;
+}
+.gemaelde.gefallen::before { display: none; }
 .gemaelde img { display: block; width: 100%; height: auto; animation: flackern 3.5s steps(1) infinite; }
 @keyframes flackern { 0%, 100% { filter: none; } 47% { filter: brightness(1.08) contrast(1.05); } 49% { filter: none; } 81% { filter: brightness(.94); } 83% { filter: none; } }
 .gemaelde.knall { animation: knall .9s var(--federn) both; }
 @keyframes knall { from { transform: scale(1.7) rotate(14deg); opacity: 0; } 40% { opacity: 1; } to { transform: rotate(-3deg); opacity: 1; } }
-.gemaelde.zittert { animation: zittern .55s linear; }
+.gemaelde.zittert img { animation: zittern .55s linear; }
 @keyframes zittern {
-  0%, 100% { transform: rotate(-3deg); }
-  10% { transform: rotate(-1deg) translate(-6px, 2px); }
-  20% { transform: rotate(-5deg) translate(5px, -3px); }
-  30% { transform: rotate(-2deg) translate(-5px, -2px); }
-  40% { transform: rotate(-4.5deg) translate(4px, 3px); }
-  55% { transform: rotate(-2.5deg) translate(-3px, 1px); }
-  70% { transform: rotate(-3.5deg) translate(2px, -1px); }
+  0%, 100% { transform: none; }
+  10% { transform: rotate(2deg) translate(-6px, 2px); }
+  20% { transform: rotate(-2deg) translate(5px, -3px); }
+  30% { transform: rotate(1deg) translate(-5px, -2px); }
+  40% { transform: rotate(-1.5deg) translate(4px, 3px); }
+  55% { transform: rotate(.5deg) translate(-3px, 1px); }
+  70% { transform: rotate(-.5deg) translate(2px, -1px); }
 }
+.sprung {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+  fill: none; stroke: var(--papier); stroke-width: .7; stroke-linejoin: bevel;
+  filter: drop-shadow(.4px .4px 0 rgba(28,15,13,.8));
+  opacity: 0;
+}
+.gemaelde.gefallen .sprung { opacity: .9; transition: opacity .05s; }
+
 .pov { font-family: var(--titel); font-weight: 800; font-size: clamp(1.5rem, 7vw, 2.1rem); line-height: 1.12; letter-spacing: -.02em; margin: 0; }
 .pov b { color: var(--rot); background: var(--kontur); padding: 0 .25em; margin-right: .1em; display: inline-block; transform: rotate(-3deg); }
+
+.boden {
+  position: relative; height: 26rem; margin: 0 calc(-1 * var(--rand)) -3rem;
+  border-bottom: 14px solid var(--ochs);
+  box-shadow: inset 0 -4px 0 var(--kontur);
+}
+#pov.bebt { animation: beben .5s linear; }
+@keyframes beben {
+  0%, 100% { transform: none; }
+  15% { transform: translateY(7px); }
+  30% { transform: translateY(-5px); }
+  50% { transform: translateY(3px); }
+  70% { transform: translateY(-2px); }
+}
 
 /* ───────── 5 · Unterwegs ───────── */
 

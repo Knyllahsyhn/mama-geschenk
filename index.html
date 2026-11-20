@@ -146,10 +146,49 @@
     <svg class="form rot"     style="--x:82%;--y:84%;--g:76px;--r:0deg;--t:-.3"><use href="#s-spirale"/></svg>
   </div>
   <p class="klein">Kleines Problem</p>
-  <figure class="gemaelde" id="gemaelde">
-    <img src="img/pov.webp" alt="Abstrakte Figur aus Chromophobia, die erschrocken guckt" width="844" height="734" loading="lazy">
+  <h2>Größe 41, die Lage am Markt</h2>
+
+  <figure class="chart" id="chart" aria-label="Diagramm: Der Preis steigt so stark, dass er oben aus dem Diagramm bricht. Die Verfügbarkeit fällt unten hindurch.">
+    <svg viewBox="0 -64 320 344" aria-hidden="true">
+      <rect class="flaeche" x="30" y="20" width="270" height="170" />
+      <path class="rand" d="M250 20 H30 V190 H250 M276 20 H300 V190 H276" />
+      <path class="stueck oben" d="M250 20 H276" />
+      <path class="stueck unten" d="M250 190 H276" />
+      <path class="raster" d="M30 62 H300 M30 105 H300 M30 148 H300" />
+      <g class="splitter oben">
+        <polygon points="256,16 266,13 261,25" style="--dx:-26px;--dy:-38px;--dr:-140deg" />
+        <polygon points="266,18 274,15 271,27" style="--dx:22px;--dy:-52px;--dr:160deg" />
+        <polygon points="260,22 268,22 263,30" style="--dx:-8px;--dy:-66px;--dr:90deg" />
+        <polygon points="270,22 277,19 276,28" style="--dx:38px;--dy:-24px;--dr:-80deg" />
+      </g>
+      <g class="splitter unten">
+        <polygon points="256,186 266,183 261,195" style="--dx:-28px;--dy:40px;--dr:150deg" />
+        <polygon points="266,188 274,185 271,197" style="--dx:24px;--dy:50px;--dr:-170deg" />
+        <polygon points="260,192 268,192 263,200" style="--dx:-6px;--dy:62px;--dr:-90deg" />
+        <polygon points="270,192 277,189 276,198" style="--dx:36px;--dy:26px;--dr:70deg" />
+      </g>
+      <path class="linie verfuegbar-rand" pathLength="1" d="M30 56 C60 54 80 64 110 62 S160 74 190 80 S236 96 248 112 L262 190 L272 262" />
+      <path class="linie verfuegbar" pathLength="1" d="M30 56 C60 54 80 64 110 62 S160 74 190 80 S236 96 248 112 L262 190 L272 262" />
+      <path class="linie preis" pathLength="1" d="M30 160 C60 162 80 150 110 152 S160 140 190 138 S236 120 248 104 L262 20 L274 -50" />
+      <text class="schild preis-schild" x="252" y="-34" text-anchor="end">Preis</text>
+      <text class="schild verfuegbar-schild" x="254" y="254" text-anchor="end">Verfügbarkeit</text>
+      <text class="achse" x="30" y="212">Zeit →</text>
+    </svg>
+    <figcaption><span class="lg preis"></span>Preis <span class="lg verfuegbar"></span>Verfügbarkeit in 41</figcaption>
   </figure>
+
+  <div class="wand">
+    <span class="nagel" aria-hidden="true"></span>
+    <figure class="gemaelde" id="gemaelde" role="button" tabindex="0" aria-label="Bild aus Chromophobia, antippen für Ton">
+      <img src="img/pov.webp" alt="Abstrakte Figur aus Chromophobia, die erschrocken guckt" width="844" height="734" loading="lazy">
+      <svg class="sprung" viewBox="0 0 100 87" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M62 0 L57 18 L66 27 L54 44 L60 58 L48 87 M57 18 L40 22 L30 14 M66 27 L84 32 L100 28 M54 44 L36 52 L22 49 L0 60 M60 58 L76 66 L90 87 M36 52 L32 70" />
+      </svg>
+    </figure>
+  </div>
   <p class="pov"><b>POV:</b> wir, als wir merkten, dass der Schuh niemals rechtzeitig ankommt.</p>
+  <div class="boden" id="boden"></div>
+  <audio id="ton" src="audio/chromo.mp3" preload="auto"></audio>
 </section>
 
 <!-- 5 · Unterwegs -->

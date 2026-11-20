@@ -239,7 +239,7 @@ fetch("status.json?t=" + Date.now(), { cache: "no-store" })
 
 /* ───────── Einblenden beim Scrollen ───────── */
 
-$$(".szene:not(#start) > :not(.umschlag):not(.brief-karte):not(.formen):not(.gemaelde)").forEach((el) => el.classList.add("einblenden"));
+$$(".szene:not(#start) > :not(.umschlag):not(.brief-karte):not(.formen):not(.chart)").forEach((el) => el.classList.add("einblenden"));
 const beobachter = new IntersectionObserver((eintraege) => {
   for (const e of eintraege) {
     if (!e.isIntersecting) continue;
@@ -305,19 +305,100 @@ setInterval(() => {
   schauen(Math.random() * innerWidth, Math.random() * innerHeight);
 }, 1800);
 
-/* ───────── POV ───────── */
+/* ───────── Ton ───────── */
 
-const gemaelde = $("#gemaelde");
+// iOS spielt Ton nur nach einer Berührung ab. Darum wird der Clip bei der
+// ersten Berührung einmal stumm angespielt und damit freigeschaltet.
+const ton = $("#ton");
+let tonFrei = false;
+function tonFreischalten() {
+  if (tonFrei) return;
+  tonFrei = true;
+  ton.muted = true;
+  const p = ton.play();
+  const zurueck = () => { ton.pause(); ton.currentTime = 0; ton.muted = false; };
+  if (p && p.then) p.then(zurueck, () => { ton.muted = false; tonFrei = false; });
+  else zurueck();
+}
+addEventListener("pointerdown", tonFreischalten, { capture: true });
+addEventListener("touchend", tonFreischalten, { capture: true });
+function tonAb() {
+  try { ton.currentTime = 0; const p = ton.play(); if (p && p.catch) p.catch(() => {}); } catch (_) {}
+}
+
+/* ───────── Chart: Preis durch die Decke, Verfügbarkeit durch den Boden ───────── */
+
+const chart = $("#chart");
 new IntersectionObserver((e, b) => {
   if (!e[0].isIntersecting) return;
-  gemaelde.classList.add("knall");
-  setTimeout(() => vibriere([30, 30, 60]), 250);
   b.disconnect();
-}, { threshold: 0.4 }).observe(gemaelde);
-gemaelde.addEventListener("click", () => {
-  gemaelde.classList.remove("knall", "zittert");
-  void gemaelde.offsetWidth;
+  chart.classList.add("laeuft");
+  setTimeout(() => {
+    chart.classList.add("kracht");
+    vibriere([50, 40, 50]);
+  }, leise ? 0 : 2450);
+}, { threshold: 0.6 }).observe(chart);
+
+/* ───────── Gemälde fällt von der Wand ───────── */
+
+const gemaelde = $("#gemaelde");
+const boden = $("#boden");
+const pov = $("#pov");
+let gesehen = false, gefallen = false;
+
+new IntersectionObserver((e, b) => {
+  if (!e[0].isIntersecting) return;
+  b.disconnect();
+  gesehen = true;
+  gemaelde.classList.add("knall");
+}, { threshold: 0.5 }).observe(gemaelde);
+
+function aufschlag() {
+  gemaelde.classList.add("gefallen");
+  boden.classList.add("belegt");
+  pov.classList.remove("bebt"); void pov.offsetWidth; pov.classList.add("bebt");
+  vibriere([90, 40, 60]);
+  tonAb();
+  const r = gemaelde.getBoundingClientRect();
+  konfetti(r.left + r.width / 2, r.bottom - 10, 40);
+}
+
+function fallen() {
+  if (gefallen) return;
+  gefallen = true;
+  const bild = gemaelde.getBoundingClientRect();
+  const b = boden.getBoundingClientRect();
+  const weg = b.bottom - 14 - 30 - bild.bottom;   // bis knapp über die Bodenleiste
+  // Drehpunkt liegt am Nagel über dem Bild; die Drehung schiebt es sonst seitlich weg
+  const versatz = -(bild.height / 2 + 52) * Math.sin(6 * Math.PI / 180);
+  const ende = `translate(${versatz.toFixed(1)}px, ${weg}px) rotate(-6deg)`;
+  if (leise) { gemaelde.style.transform = ende; aufschlag(); return; }
+  const dauer = 1800, treffer = 0.84;
+  gemaelde.animate([
+    { transform: "rotate(-3deg)" },
+    { transform: "rotate(10deg)", offset: 0.22, easing: "ease-in-out" },
+    { transform: "rotate(4deg)", offset: 0.34, easing: "ease-in-out" },
+    { transform: "rotate(13deg) translateY(12px)", offset: 0.46, easing: "cubic-bezier(.55,0,1,.45)" },
+    { transform: ende, offset: treffer, easing: "ease-out" },
+    { transform: `translate(${(versatz * 0.6).toFixed(1)}px, ${weg - 28}px) rotate(-3.5deg)`, offset: 0.92, easing: "ease-in" },
+    { transform: ende },
+  ], { duration: dauer, fill: "forwards" });
+  setTimeout(() => vibriere(15), dauer * 0.2);
+  setTimeout(aufschlag, dauer * treffer);
+}
+
+// fällt, sobald das Bild beim Weiterscrollen in das obere Drittel wandert
+addEventListener("scroll", () => {
+  if (!gesehen || gefallen) return;
+  if (gemaelde.getBoundingClientRect().top < innerHeight * 0.22) fallen();
+}, { passive: true });
+
+function antippen() {
+  gemaelde.classList.remove("zittert"); void gemaelde.offsetWidth;
   gemaelde.classList.add("zittert");
   vibriere([40, 30, 40, 30, 80]);
-});
+  tonAb();
+}
+gemaelde.addEventListener("click", antippen);
+gemaelde.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); antippen(); } });
 gemaelde.addEventListener("animationend", (e) => { if (e.animationName === "zittern") gemaelde.classList.remove("zittert"); });
